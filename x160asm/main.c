@@ -19,6 +19,7 @@ FILE* fou;
 int neg = 0;
 int org = 0;
 int len = 0;
+int disp = 0;
 
 void fw(FILE* d, int s)
 {
@@ -876,7 +877,9 @@ int main(int argc, const char * argv[]) {
                 if (org == 0) {
                     org = t;
                 } else {
-                    for(int i=0;i<t-(org+len/12);i++) {
+                    disp = t-(org+len/12);
+                    printf("words: %d\tdisp: %d\n",len/12,disp);
+                    for(int i=0;i<disp;i++) {
                         w0;w0;w0;w0;
                     }
                     org = t;
@@ -887,7 +890,7 @@ int main(int argc, const char * argv[]) {
         }
     }
     
-    printf("%d words used\n",len/12);
+    printf("%d (I+D) words used\n",len/12);
     
     return 0;
 }
