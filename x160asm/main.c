@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #define w(x) fw(fou,(x))
 #define w0 w(0)
@@ -15,52 +16,105 @@
 FILE* fin;
 FILE* fou;
 
+int neg = 0;
+int org = 0;
+int len = 0;
+
 void fw(FILE* d, int s)
 {
     switch(s){
         case 0:
-            fputc('0',d);
-            fputc('0',d);
-            fputc('0',d);
+            if (neg) {
+                fputc('1',d);
+                fputc('1',d);
+                fputc('1',d);
+            } else {
+                fputc('0',d);
+                fputc('0',d);
+                fputc('0',d);
+            }
             break;
         case 1:
-            fputc('0',d);
-            fputc('0',d);
-            fputc('1',d);
+            if (neg) {
+                fputc('1',d);
+                fputc('1',d);
+                fputc('0',d);
+            } else {
+                fputc('0',d);
+                fputc('0',d);
+                fputc('1',d);
+            }
             break;
         case 2:
-            fputc('0',d);
-            fputc('1',d);
-            fputc('0',d);
+            if (neg) {
+                fputc('1',d);
+                fputc('0',d);
+                fputc('1',d);
+            } else {
+                fputc('0',d);
+                fputc('1',d);
+                fputc('0',d);
+            }
             break;
         case 3:
-            fputc('0',d);
-            fputc('1',d);
-            fputc('1',d);
+            if (neg) {
+                fputc('1',d);
+                fputc('0',d);
+                fputc('0',d);
+            } else {
+                fputc('0',d);
+                fputc('1',d);
+                fputc('1',d);
+            }
             break;
         case 4:
-            fputc('1',d);
-            fputc('0',d);
-            fputc('0',d);
+            if (neg) {
+                fputc('0',d);
+                fputc('1',d);
+                fputc('1',d);
+            } else {
+                fputc('1',d);
+                fputc('0',d);
+                fputc('0',d);
+            }
             break;
         case 5:
-            fputc('1',d);
-            fputc('0',d);
-            fputc('1',d);
+            if (neg) {
+                fputc('0',d);
+                fputc('1',d);
+                fputc('0',d);
+            } else {
+                fputc('1',d);
+                fputc('0',d);
+                fputc('1',d);
+            }
             break;
         case 6:
-            fputc('1',d);
-            fputc('1',d);
-            fputc('0',d);
+            if (neg) {
+                fputc('0',d);
+                fputc('0',d);
+                fputc('1',d);
+            } else {
+                fputc('1',d);
+                fputc('1',d);
+                fputc('0',d);
+            }
             break;
         case 7:
-            fputc('1',d);
-            fputc('1',d);
-            fputc('1',d);
+            if (neg) {
+                fputc('0',d);
+                fputc('0',d);
+                fputc('0',d);
+            } else {
+                fputc('1',d);
+                fputc('1',d);
+                fputc('1',d);
+            }
             break;
         default:
             break;
     }
+    len += 3;
     
     fputc(' ',d);
 }
@@ -69,6 +123,7 @@ int main(int argc, const char * argv[]) {
     char c1 = 0;
     char c2 = 0;
     char c3 = 0;
+    int t = 0;
     
     if (argc < 3) {
         printf("Error missing argument\n");
@@ -76,7 +131,16 @@ int main(int argc, const char * argv[]) {
     }
     
     fin = fopen(argv[1],"r");
+    if (fin == NULL) {
+        printf("Error opening input %s\n",argv[1]);
+        exit(100);
+    }
+    
     fou = fopen(argv[2],"w");
+    if (fou == NULL) {
+        printf("Error opening output %s\n",argv[2]);
+        exit(110);
+    }
     
     while((c1 = fgetc(fin)) != EOF) {
         switch(c1) {
@@ -87,8 +151,7 @@ int main(int argc, const char * argv[]) {
                         c3 = fgetc(fin);
                         switch(c3) {
                             case 'J':
-                                fw(fou,0);
-                                fw(fou,0);
+                                w0;w0;
                                 break;
                         }
                         break;
@@ -799,10 +862,32 @@ int main(int argc, const char * argv[]) {
             case '7':
                 fw(fou,c1-'0');
                 break;
+            case '-':
+                neg=1;
+                break;
+            case '\n':
+                neg=0;
+                break;
+            case '#':
+                t = 0;
+                for(int i=3;i>=0;i--) {
+                    t += (fgetc(fin)-'0')*pow(10,i);
+                }
+                if (org == 0) {
+                    org = t;
+                } else {
+                    for(int i=0;i<t-(org+len/12);i++) {
+                        w0;w0;w0;w0;
+                    }
+                    org = t;
+                }
+                break;
             default:
                 break;
         }
     }
+    
+    printf("%d words used\n",len/12);
     
     return 0;
 }
