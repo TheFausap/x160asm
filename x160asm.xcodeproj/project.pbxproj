@@ -25,6 +25,7 @@
 /* Begin PBXFileReference section */
 		F440AFB029034A7500382DA1 /* x160asm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = x160asm; sourceTree = BUILT_PRODUCTS_DIR; };
 		F440AFB329034A7500382DA1 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		F440AFBA2903E9DA00382DA1 /* tst1.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = tst1.s; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				F440AFB329034A7500382DA1 /* main.c */,
+				F440AFBA2903E9DA00382DA1 /* tst1.s */,
 			);
 			path = x160asm;
 			sourceTree = "<group>";
@@ -239,16 +241,22 @@
 		F440AFB829034A7500382DA1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
 		F440AFB929034A7500382DA1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
