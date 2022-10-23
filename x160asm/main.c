@@ -341,7 +341,6 @@ int main(int argc, const char * argv[]) {
                         switch(c3) {
                             case 'T':
                                 w(7);w(7);
-                                w(7);w(7);
                                 break;
                         }
                         break;
