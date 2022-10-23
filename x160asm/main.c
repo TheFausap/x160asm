@@ -758,6 +758,9 @@ int main(int argc, const char * argv[]) {
                             case 'D':
                                 w(1);w(4);
                                 break;
+                            case 'N':
+                                w0;w(3);
+                                break;
                         }
                         break;
                     case 'J':
