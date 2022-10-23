@@ -24,6 +24,8 @@ int disp = 0;
 char bl = 0;
 char bl0 = 0;
 
+int slj = 0;
+
 void fw(FILE* d, int s)
 {
     switch(s){
@@ -156,6 +158,7 @@ int main(int argc, const char * argv[]) {
                         switch(c3) {
                             case 'J':
                                 w0;w0;
+                                w(7);
                                 break;
                         }
                         break;
@@ -289,6 +292,7 @@ int main(int argc, const char * argv[]) {
                         switch(c3) {
                             case 'J':
                                 w0;w0;
+                                w(5);
                                 break;
                         }
                         break;
@@ -337,7 +341,7 @@ int main(int argc, const char * argv[]) {
                         switch(c3) {
                             case 'T':
                                 w(7);w(7);
-                                w0;w0;
+                                w(7);w(7);
                                 break;
                         }
                         break;
@@ -384,6 +388,7 @@ int main(int argc, const char * argv[]) {
                         switch(c3) {
                             case 'J':
                                 w0;w0;
+                                w(3);
                                 break;
                         }
                         break;
@@ -587,6 +592,7 @@ int main(int argc, const char * argv[]) {
                         switch(c3) {
                             case 'P':
                                 w0;w0;
+                                w0;
                                 break;
                         }
                         break;
@@ -719,6 +725,10 @@ int main(int argc, const char * argv[]) {
                             case 'N':
                                 w0;w(7);
                                 break;
+                            case 'U':
+                                w0;w(1);
+                                w(4);
+                                break;
                         }
                         break;
                     case 'C':
@@ -750,12 +760,24 @@ int main(int argc, const char * argv[]) {
                                 break;
                         }
                         break;
+                    case 'J':
+                        c3 = fgetc(fin);
+                        switch(c3) {
+                            case 'S':
+                                w(7);w(7);
+                                break;
+                        }
+                        break;
                     case 'L':
                         c3 = fgetc(fin);
                         switch(c3) {
                             case 'S':
+                                w(7);w(7);
+                                w0;
+                                break;
                             case 'J':
                                 w(7);w(7);
+                                slj = 1;
                                 break;
                         }
                         break;
@@ -785,6 +807,10 @@ int main(int argc, const char * argv[]) {
                                 break;
                             case 'D':
                                 w(4);w(4);
+                                break;
+                            case 'J':
+                                w0;w0;
+                                w(1);
                                 break;
                         }
                         break;
@@ -816,8 +842,11 @@ int main(int argc, const char * argv[]) {
                                 w(4);w0;
                                 break;
                             case 'P':
+                                w0;w(1);
+                                w(5);
                             case 'E':
                                 w0;w(1);
+                                w(6);
                                 break;
                         }
                         break;
@@ -825,8 +854,12 @@ int main(int argc, const char * argv[]) {
                         c3 = fgetc(fin);
                         switch(c3) {
                             case 'C':
+                                w0;w0;
+                                w(2);
+                                break;
                             case 'D':
                                 w0;w0;
+                                w(6);
                                 break;
                         }
                         break;
@@ -835,6 +868,7 @@ int main(int argc, const char * argv[]) {
                         switch(c3) {
                             case 'C':
                                 w0;w0;
+                                w(4);
                                 break;
                         }
                         break;
@@ -864,7 +898,13 @@ int main(int argc, const char * argv[]) {
             case '5':
             case '6':
             case '7':
-                fw(fou,c1-'0');
+                if (slj) {
+                    fw(fou,c1-'0');
+                    w0;
+                    slj = 0;
+                } else {
+                    fw(fou,c1-'0');
+                }
                 break;
             case '-':
                 neg=1;
