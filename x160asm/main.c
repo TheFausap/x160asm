@@ -18,8 +18,11 @@ FILE* fou;
 
 int neg = 0;
 int org = 0;
+int oorg = 0;
 int len = 0;
 int disp = 0;
+char bl = 0;
+char bl0 = 0;
 
 void fw(FILE* d, int s)
 {
@@ -871,19 +874,43 @@ int main(int argc, const char * argv[]) {
                 break;
             case '#':
                 t = 0;
+                bl = fgetc(fin);
+                fgetc(fin);
                 for(int i=3;i>=0;i--) {
-                    t += (fgetc(fin)-'0')*pow(10,i);
+                    t += (fgetc(fin)-'0')*pow(8,i);
                 }
+                
                 if (org == 0) {
                     org = t;
+                    bl0 = bl;
+                    fputc('#',fou);fputc(bl,fou);
+                    fputc(',',fou);
+                    fprintf(fou,"%04o",t);
+                    fputc('\n',fou);
                 } else {
-                    disp = t-(org+len/12);
-                    printf("words: %d\tdisp: %d\n",len/12,disp);
-                    for(int i=0;i<disp;i++) {
-                        w0;w0;w0;w0;
+                    if (bl == bl0) {
+                        disp = t-(org+len/12);
+                        printf("words: %o\tdisp: %o\n",len/12,disp);
+                        for(int i=0;i<disp;i++) {
+                            w0;w0;w0;w0;
+                        }
+                        org = t;
+                    } else {
+                        fputc('\n',fou);
+                        fputc('#',fou);fputc(bl,fou);
+                        fputc(',',fou);
+                        fprintf(fou,"%04o",t);
+                        fputc('\n',fou);
+                        oorg = (org+len/12) + 1;
                     }
-                    org = t;
                 }
+                break;
+            case '@':
+                t = 0;
+                for(int i=3;i>=0;i--) {
+                    t += (fgetc(fin)-'0')*pow(8,i);
+                }
+                fprintf(fou,"@%04o\n",t);
                 break;
             default:
                 break;
