@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 
 #define w(x) fw(fou,(x))
 #define w0 w(0)
@@ -125,24 +126,57 @@ void fw(FILE* d, int s)
     fputc(' ',d);
 }
 
+void vfy(const char* f)
+{
+    char c;
+    int d;
+    int spc = 0;
+    
+    fin = fopen(f,"r");
+    while ((c = fgetc(fin)) != EOF) {
+        if ((c == '@') || (c == '#')) {
+            while ((c = fgetc(fin)) != '\n') {}
+        }
+        else if (c == ' ') {
+            if (spc > 2) {
+                printf("\n");
+                spc = -1;
+            }
+            spc++;
+        }
+        else {
+            d = (c - '0')*4;
+            d += (fgetc(fin) - '0')*2;
+            d += (fgetc(fin) - '0');
+            printf("%d",d);
+            d=0;
+        }
+    }
+}
+
 int main(int argc, const char * argv[]) {
     char c1 = 0;
     char c2 = 0;
     char c3 = 0;
     int t = 0;
     
-    if (argc < 3) {
+    if (argc < 4) {
         printf("Error missing argument\n");
         exit(200);
     }
     
-    fin = fopen(argv[1],"r");
+    if (strcmp(argv[1],"v") == 0) {
+        vfy(argv[3]);
+        exit(0);
+    }
+    
+    fin = fopen(argv[2],"r");
     if (fin == NULL) {
         printf("Error opening input %s\n",argv[1]);
         exit(100);
     }
     
-    fou = fopen(argv[2],"w");
+    fou = fopen(argv[3],"w");
     if (fou == NULL) {
         printf("Error opening output %s\n",argv[2]);
         exit(110);
