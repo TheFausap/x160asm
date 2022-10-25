@@ -18,7 +18,7 @@ FILE* fin;
 FILE* fou;
 
 int neg = 0;
-int org = 0;
+int org = -1;
 int oorg = 0;
 int len = 0;
 int disp = 0;
@@ -143,6 +143,9 @@ void vfy(const char* f)
                 spc = -1;
             }
             spc++;
+        }
+        else if (c == '\n') {
+            
         }
         else {
             d = (c - '0')*4;
@@ -956,7 +959,7 @@ int main(int argc, const char * argv[]) {
                     t += (fgetc(fin)-'0')*pow(8,i);
                 }
                 
-                if (org == 0) {
+                if (org == -1) {
                     org = t;
                     bl0 = bl;
                     fputc('#',fou);fputc(bl,fou);
